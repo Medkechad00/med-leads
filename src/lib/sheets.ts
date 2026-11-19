@@ -100,7 +100,7 @@ export async function updateCrmLead(id:string,change:LeadChange){
   else extra.push([id,field,value,new Date().toISOString()]);
  }
  if(!updates.length&&!extra.length)throw new Error('No editable changes');
- if(updates.length)await api.spreadsheets.values.batchUpdate({spreadsheetId,valueInputOption:'RAW',requestBody:{data:updates}});
+ if(updates.length)await api.spreadsheets.values.batchUpdate({spreadsheetId,requestBody:{valueInputOption:'RAW',data:updates}});
  if(extra.length){await ensureUpdatesSheet();await api.spreadsheets.values.append({spreadsheetId,range:`${q(SHEETS.updates)}!A:D`,valueInputOption:'RAW',insertDataOption:'INSERT_ROWS',requestBody:{values:extra}});}
  return {success:true};
 }
